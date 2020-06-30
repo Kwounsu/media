@@ -16,8 +16,8 @@ class DatabaseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_database)
     }
 
-    //method for saving records in database
-    fun saveRecord(view: View){
+    //method for inserting records in database
+    fun insertRecord(view: View){
         val id = u_id.text.toString()
         val name = u_name.text.toString()
         val email = u_email.text.toString()
@@ -25,7 +25,7 @@ class DatabaseActivity : AppCompatActivity() {
         if(id.trim()!="" && name.trim()!="" && email.trim()!=""){
             val status = databaseHandler.addEmployee(EmpModelClass(Integer.parseInt(id),name, email))
             if(status > -1){
-                Toast.makeText(applicationContext,"record save",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext,"record insert",Toast.LENGTH_LONG).show()
                 u_id.text.clear()
                 u_name.text.clear()
                 u_email.text.clear()
