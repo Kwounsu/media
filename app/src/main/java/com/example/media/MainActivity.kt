@@ -1,6 +1,7 @@
 package com.example.media
 
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var mediaPlayer: MediaPlayer
+    private var mediaPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,30 +24,31 @@ class MainActivity : AppCompatActivity() {
         // Initialize the media player
         try {
             mediaPlayer = MediaPlayer.create(this, R.raw.friendlyday)
-            mediaPlayer.prepare()
-            mediaPlayer.prepareAsync()
+            mediaPlayer?.setOnPreparedListener {
+                Toast.makeText(this,"Prepared!",Toast.LENGTH_LONG).show()
+            }
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this,"Failed Loading",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Failed Loading",Toast.LENGTH_LONG).show()
         }
 
         // Buttons handling playing audio.
         button_start.setOnClickListener {
-            mediaPlayer.start()
+            mediaPlayer?.start()
             Toast.makeText(this,"Start Audio",Toast.LENGTH_SHORT).show()
             button_pause.isEnabled = true
             button_start.isEnabled = false
             button_stop.isEnabled = true
         }
         button_pause.setOnClickListener {
-            mediaPlayer.pause()
+            mediaPlayer?.pause()
             Toast.makeText(this,"Pause Audio",Toast.LENGTH_SHORT).show()
             button_pause.isEnabled = false
             button_start.isEnabled = true
             button_stop.isEnabled = true
         }
         button_stop.setOnClickListener {
-            mediaPlayer.stop()
+            mediaPlayer?.stop()
             Toast.makeText(this,"Stop Audio",Toast.LENGTH_SHORT).show()
             button_pause.isEnabled = false
             button_start.isEnabled = true
