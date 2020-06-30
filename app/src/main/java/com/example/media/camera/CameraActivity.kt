@@ -1,4 +1,4 @@
-package com.example.media
+package com.example.media.camera
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore.ACTION_IMAGE_CAPTURE_SECURE
 import androidx.annotation.RequiresApi
+import com.example.media.R
 import kotlinx.android.synthetic.main.activity_camera.*
 
 class CameraActivity : AppCompatActivity() {

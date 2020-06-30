@@ -1,10 +1,10 @@
-package com.example.media
+package com.example.media.audio
 
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.media.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 /*
@@ -23,7 +23,9 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize the media player
         try {
-            mediaPlayer = MediaPlayer.create(this, R.raw.friendlyday)
+            mediaPlayer = MediaPlayer.create(this,
+                R.raw.friendlyday
+            )
             mediaPlayer?.setOnPreparedListener {
                 Toast.makeText(this,"Prepared!",Toast.LENGTH_LONG).show()
             }
