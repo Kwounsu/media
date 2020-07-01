@@ -4,18 +4,17 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.webkit.URLUtil
 import android.widget.MediaController
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.media.R
+
 
 /*
 * Video player activity.
  */
 
 class VideoActivity : AppCompatActivity() {
-    val VIDEO_NAME = "movie.mp4"
     lateinit var videoview : VideoView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,21 +29,10 @@ class VideoActivity : AppCompatActivity() {
         videoview.setMediaController(controller)
     }
 
-    private fun getURI(videoname:String): Uri {
-        if (URLUtil.isValidUrl(videoname)) {
-            //  an external URL
-            Log.i("videoView","external URL")
-            return Uri.parse(videoname)
-        } else { //  a raw resource
-            Log.i("videoView","raw resource")
-            return Uri.parse("android.resource://" + getPackageName() + "/raw/" + videoname)
-        }
-    }
-
     private fun initPlayer() {
-        val videoUri:Uri = getURI(VIDEO_NAME)
-        Log.i("videoView","initPlayer: $videoUri")
-        videoview.setVideoURI(videoUri)
+        val uriPath = "android.resource://" + packageName + "/" + R.raw.movie
+        val uri = Uri.parse(uriPath)
+        videoview.setVideoURI(uri)
         videoview.start()
     }
 

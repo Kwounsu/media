@@ -3,6 +3,7 @@ package com.example.media.sqlite
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -14,6 +15,7 @@ class DatabaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_database)
+        Log.i("SQLite", "DatabaseActivity: onCreate")
     }
 
     //method for inserting records in database
@@ -21,9 +23,10 @@ class DatabaseActivity : AppCompatActivity() {
         val id = u_id.text.toString()
         val name = u_name.text.toString()
         val email = u_email.text.toString()
+        Log.i("SQLite", "DatabaseActivity: insertRecord $id, $name, $email")
         val databaseHandler: DatabaseHandler= DatabaseHandler(this)
         if(id.trim()!="" && name.trim()!="" && email.trim()!=""){
-            val status = databaseHandler.addEmployee(EmpModelClass(Integer.parseInt(id),name, email))
+            val status = databaseHandler.insertEmployee(EmpModelClass(Integer.parseInt(id),name, email))
             if(status > -1){
                 Toast.makeText(applicationContext,"record insert",Toast.LENGTH_LONG).show()
                 u_id.text.clear()
@@ -37,6 +40,7 @@ class DatabaseActivity : AppCompatActivity() {
 
     //method for read records from database in ListView
     fun viewRecord(view: View){
+        Log.i("SQLite", "DatabaseActivity: viewRecord")
         //creating the instance of DatabaseHandler class
         val databaseHandler: DatabaseHandler= DatabaseHandler(this)
         //calling the viewEmployee method of DatabaseHandler class to read the records
@@ -46,7 +50,6 @@ class DatabaseActivity : AppCompatActivity() {
         val empArrayEmail = Array<String>(emp.size){"null"}
         var index = 0
         for(e in emp){
-//        for((index, e) in emp.withIndex()){
             empArrayId[index] = e.userId.toString()
             empArrayName[index] = e.userName
             empArrayEmail[index] = e.userEmail
@@ -71,13 +74,13 @@ class DatabaseActivity : AppCompatActivity() {
         dialogBuilder.setTitle("Update Record")
         dialogBuilder.setMessage("Enter data below")
         dialogBuilder.setPositiveButton("Update", DialogInterface.OnClickListener { _, _ ->
-
             val updateId = edtId.text.toString()
             val updateName = edtName.text.toString()
             val updateEmail = edtEmail.text.toString()
             //creating the instance of DatabaseHandler class
             val databaseHandler: DatabaseHandler= DatabaseHandler(this)
             if(updateId.trim()!="" && updateName.trim()!="" && updateEmail.trim()!=""){
+                Log.i("SQLite", "DatabaseActivity: updateRecord $updateId, $updateName, $updateEmail")
                 //calling the updateEmployee method of DatabaseHandler class to update record
                 val status = databaseHandler.updateEmployee(EmpModelClass(Integer.parseInt(updateId),updateName, updateEmail))
                 if(status > -1){
@@ -106,8 +109,8 @@ class DatabaseActivity : AppCompatActivity() {
         dialogBuilder.setTitle("Delete Record")
         dialogBuilder.setMessage("Enter id below")
         dialogBuilder.setPositiveButton("Delete", DialogInterface.OnClickListener { _, _ ->
-
             val deleteId = dltId.text.toString()
+            Log.i("SQLite", "DatabaseActivity: deleteRecord $deleteId")
             //creating the instance of DatabaseHandler class
             val databaseHandler: DatabaseHandler= DatabaseHandler(this)
             if(deleteId.trim()!=""){
@@ -119,7 +122,6 @@ class DatabaseActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(applicationContext,"id or name or email cannot be blank",Toast.LENGTH_LONG).show()
             }
-
         })
         dialogBuilder.setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->
             //pass
